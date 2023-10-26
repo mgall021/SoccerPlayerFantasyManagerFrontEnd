@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import {  NgFor, NgIf,} from '@angular/common';
 import {
   NgbCarouselConfig,
   NgbCarouselModule,
@@ -7,11 +6,9 @@ import {
 
 @Component({
   selector: 'app-carousel',
-  standalone: true,
-  imports: [NgbCarouselModule, NgIf, NgFor],
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.css'],
-  providers:[NgbCarouselConfig],
+  providers:[NgbCarouselConfig,NgbCarouselModule],
 })
 export class CarouselComponent {
   images: any = [
