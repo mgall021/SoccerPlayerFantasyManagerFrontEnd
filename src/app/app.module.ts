@@ -9,7 +9,8 @@ import { CarouselComponent } from './carousel/carousel.component';
 import { FantasyTeamDescriptionComponent } from './fantasy-team-description/fantasy-team-description.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { CreateComponent } from './createPage/create.component';
+import { CreateComponent } from './create/create.component';
+
 
 @NgModule({
   declarations: [
