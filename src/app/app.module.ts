@@ -1,22 +1,20 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgbCarouselModule, NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SearchComponent } from './search/search.component';
 import { LandingComponent } from './landing/landing.component';
+import { CarouselComponent } from './carousel/carousel.component';
+import { FantasyTeamDescriptionComponent } from './fantasy-team-description/fantasy-team-description.component';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    SearchComponent,
-    LandingComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule
-  ],
+    AppComponent, LandingComponent,FantasyTeamDescriptionComponent, CarouselComponent],
+  imports: [BrowserModule,AppRoutingModule, NgbModule,FormsModule,HttpClientModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule { }
