@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-
+import { AuthService } from '../auth.service'; 
 
 @Component({
   selector: 'app-register',
@@ -8,27 +7,23 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  registerForm: any = {};
-  constructor(private httpClient: HttpClient) {}
-
-
-  onRegisterSubmit() {
-    name: this.registerForm.name, 
-    emailAddress: this.registerForm.emailAddress, 
-    password: this.registerForm.password,
+  registerData = {
+    name: '',
+    emailAddress: '',
+    password: ''
   };
 
-  this.httpClient.post('/auth/users/register/', registrationData)
-  .subscribe(
-    (response: any) => {
-      // Registration successful, handle the response
-      console.log(response); // You can log the response for debugging
-      // Handle the success response (e.g., show a success message to the user)
-    },
-    (error: any) => {
-      // Registration failed, handle the error
-      console.error(error); // Log the error for debugging
-      // Handle the error (e.g., display an error message to the user)
-    }
-  );
+  constructor(private authService: AuthService) {}
+
+  onRegisterSubmit() {
+
+    this.authService.register(this.registerData).subscribe(
+      (response) => {
+        window.location.href = '/login'; 
+      },
+      (error) => {
+        console.error('Registration failed:', error);
+      }
+    );
+  }
 }
