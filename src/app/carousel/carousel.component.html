@@ -1,10 +1,16 @@
-<ngb-carousel *ngIf="images">
-  <ng-template ngbSlide *ngFor="let image of images">
-    <div class="picsum-img-wrapper">
-      <img [src]="image.url" alt="{{ image.name }} slide" />
-    </div>
-    <div class="carousel-caption">
-      <h3>{{ image.name }}</h3>
-    </div>
+<ngb-carousel
+  #carousel
+  [interval]="5000"
+  [pauseOnHover]="pauseOnHover"
+  (slide)="onSlide($event)"
+>
+  <ng-template ngbSlide *ngFor="let img of images; index as i">
+      <div class="carousel-caption">
+      </div>
+      <a>
+          <div class="picsum-img-wrapper">
+              <img class="d-block w-100" [src]="img" alt="My image {{i + 1}} description" />
+          </div>
+      </a>
   </ng-template>
 </ngb-carousel>

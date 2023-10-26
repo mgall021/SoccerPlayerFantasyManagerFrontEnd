@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     AppComponent, LandingComponent,FantasyTeamDescriptionComponent, CarouselComponent],
-  imports: [BrowserModule,AppRoutingModule, NgbModule,FormsModule,HttpClientModule,NgbCarouselModule],
+  imports: [BrowserModule,AppRoutingModule, NgbModule,FormsModule,HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
