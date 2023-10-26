@@ -35,5 +35,29 @@ export class CreateComponent implements OnInit {
       }
     });
   }
+  loadUserFantasyTeamPlayers() {
+    this.fantasyTeamService.getFantasyTeams(userId).subscribe((fantasyTeams) => {
+      if (fantasyTeams.length > 0) {
+        this.userFantasyTeamPlayers = fantasyTeams[0].soccerPlayers; // list of players
+      }
+    });
+  }
+  searchPlayers() {
+    this.fantasyTeamService.searchPlayers(this.playerSearchTerm).subscribe((results) => {
+      this.searchResults = results;
+    });
+  }
+  addPlayer(playerId: number) {
+    this.fantasyTeamService.addPlayerToTeam(userId, playerId).subscribe(() => {
+      this.loadUserFantasyTeamPlayers();
+      this.searchResults = [];
+    });
+  }
+  removePlayer(playerId: number) {
+    this.fantasyTeamService.removePlayerFromTeam(userId, playerId).subscribe(() => {
+      this.loadUserFantasyTeamPlayers();
+    });
+  }
+
 
 }
