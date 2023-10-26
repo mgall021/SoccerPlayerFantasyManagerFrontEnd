@@ -12,12 +12,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { CreateComponent } from './create/create.component';
 import { LoginComponent } from './login/login.component';
 
-
 @NgModule({
   declarations: [
-    AppComponent, LandingComponent,FantasyTeamDescriptionComponent, CarouselComponent, CreateComponent, LoginComponent],
-  imports: [BrowserModule,AppRoutingModule, NgbModule,FormsModule,HttpClientModule],
+    AppComponent,
+    LandingComponent,
+    FantasyTeamDescriptionComponent,
+    CarouselComponent,
+    CreateComponent,
+    LoginComponent,
+  ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    NgbModule,
+    FormsModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
