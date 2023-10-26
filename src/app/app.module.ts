@@ -5,7 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SearchComponent } from './search/search.component';
 import { LandingComponent } from './landing/landing.component';
-import { CarouselComponent } from './carousel/carousel.component';
+import { CarouselComponent } from './landing/carousel/carousel.component';
 
 @NgModule({
   declarations: [
