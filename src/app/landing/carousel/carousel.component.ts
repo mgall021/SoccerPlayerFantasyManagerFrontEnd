@@ -32,6 +32,7 @@ export class CarouselComponent {
       url: 'https://imgs.search.brave.com/C-oLXxKFXDuINk6YDWFNhpooDe5ES5xemyOQ4lN-LrQ/rs:fit:500:0:0/g:ce/aHR0cHM6Ly9tZWRp/YS5pc3RvY2twaG90/by5jb20vaWQvNTMw/ODc0Mzc5L3Bob3Rv/L3NlYXR0bGUtYXQt/c3Vuc2V0LmpwZz9z/PTYxMng2MTImdz0w/Jms9MjAmYz1icFEx/U1pZdzdPQmRaSlNI/amFUTzA0cFJmUXIw/ajRtZ0JubVhJVW1V/Mm1VPQ',
     },
   ];
+  // images = [700, 533, 807, 124].map((n) => `https://picsum.photos/id/${n}/900/500`);
   constructor(config: NgbCarouselConfig) {
     // customize default values of carousels used by this component tree
     config.interval = 5000;
