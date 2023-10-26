@@ -11,6 +11,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { CreateComponent } from './create/create.component';
 import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { LoginComponent } from './login/login.component';
     CarouselComponent,
     CreateComponent,
     LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
