@@ -1,0 +1,9 @@
+img {
+    width: 800px;
+    height: 500px;
+  }
+  ngb-carousel {
+    width: 800px;
+    margin: 0 auto;
+  }
+  
