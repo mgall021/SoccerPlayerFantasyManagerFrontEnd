@@ -13,7 +13,7 @@
             <ul class="list-group">
               <li class="list-group-item" *ngFor="let player of userFantasyTeamPlayers">
                 {{ player.name }}
-                <button class="btn btn-danger btn-sm float-right" (click)="removePlayer(player.id)">Remove</button>
+                <!-- <button class="btn btn-danger btn-sm float-right" (click)="removePlayer(player.id)">Remove</button> -->
               </li>
             </ul>
           </div>
@@ -26,13 +26,13 @@
           <div class="card-body">
             <div class="form-group">
               <input type="text" class="form-control" placeholder="Player Name" [(ngModel)]="playerSearchTerm">
-              <button class="btn btn-primary mt-2" (click)="searchPlayers()">Search</button>
+              <!-- <button class="btn btn-primary mt-2" (click)="searchPlayers()">Search</button> -->
             </div>
             <!-- Display search results here -->
             <ul class="list-group">
               <li class="list-group-item" *ngFor="let player of searchResults">
                 {{ player.name }}
-                <button class="btn btn-success btn-sm float-right" (click)="addPlayer(player.id)">Add to Roster</button>
+                <!-- <button class="btn btn-success btn-sm float-right" (click)="addPlayer(player.id)">Add to Roster</button> -->
               </li>
             </ul>
           </div>
@@ -42,5 +42,5 @@
       <div class="col-md-9">
       </div>
     </div>
-  </div>
+
   

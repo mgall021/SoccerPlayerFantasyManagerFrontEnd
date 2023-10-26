@@ -20,7 +20,9 @@ export class LoginComponent {
       (response) => {
         // Login successful
         // Store the JWT token in local storage
-        localStorage.setItem('token', response.token);
+        console.log(response);
+        // this.authService.setUserId(response.data.id)
+        localStorage.setItem('token', response.jwt);
 
         // Redirect to the "/create" page using Angular router
         this.router.navigate(['/create']);

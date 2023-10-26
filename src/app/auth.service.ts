@@ -12,6 +12,7 @@ export class AuthService {
   private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
   public token$: Observable<string | null> = this.tokenSubject.asObservable();
 
+  userId:number|null = null;
   constructor(private http: HttpClient) {}
 
   login(username: string, password: string): Observable<any> {
@@ -22,6 +23,7 @@ export class AuthService {
 
     return this.http.post<any>(`${this.API_URL}/login/`, loginData).pipe(
       tap(response => {
+        console.log(response);
         if (response && response.token) {
           localStorage.setItem('token', response.token);
           this.tokenSubject.next(response.token);
@@ -31,6 +33,7 @@ export class AuthService {
   }
 
   register(user: any): Observable<any> {
+    
     return this.http.post<any>(`${this.API_URL}/register/`, user);
   }
 
@@ -43,4 +46,11 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('token');
   }
+  setUserId(userId: any): void {
+    this.userId = userId;
+  }
+  getUserId(){
+    return this.userId;
+  }
+
 }
