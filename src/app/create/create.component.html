@@ -10,12 +10,22 @@
       <option value="team">Team</option>
     </select>
   </div>
+  <!-- Results section -->
   <div *ngFor="let player of players">
     {{ player.name }} - {{ player.position }} - {{ player.country }}
     <button (click)="addPlayerToTeam(player.id)">Add to Team</button>
   </div>
+  <!-- Team Selected section -->
   <div *ngFor="let player of myTeam">
     {{ player.name }} - {{ player.position }} - {{ player.country }}
     <button (click)="removePlayerFromTeam(player.id)">Remove from Team</button>
   </div>
 </div>
+
+
+<ul>
+  <li *ngFor="let player of players">
+    {{ player.name }} ({{ player.position }}, {{ player.country }}, {{ player.team }})
+    <button (click)="addPlayerToTeam(player.id)">Add to Fantasy Team</button>
+  </li>
+</ul>

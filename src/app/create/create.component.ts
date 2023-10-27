@@ -14,41 +14,73 @@ export class CreateComponent implements OnInit {
   players: any[] = [];
   myTeam: any[] = [];
   userId: number | null = null;
+  teamId?: number;
 
-  constructor(
-    private soccerService: SoccerService,
-    private authService: AuthService  
-  ) {}
+  constructor(private soccerService: SoccerService, private authService: AuthService) {
+    this.teamId;
+  }
+  
+
 
   ngOnInit() {
-    this.userId = this.authService.getUserId(); // Assuming this method exists in AuthService and returns the logged-in user's ID
+    this.userId = this.authService.getUserId();
     if (this.userId !== null) {
-      // If you have other logic to execute for the logged-in user, place it here
+      this.authService.getTeamId().subscribe(response => {
+        if (response && response.length > 0) {
+          this.teamId = response[0].id;
+        }
+      });
     }
   }
+  
 
   searchPlayers() {
     this.soccerService.searchPlayersByCriteria(this.searchType, this.searchQuery).subscribe(response => {
-      this.players = response.data;
-    });
+      console.log(response);
+  });
+  
+  }
+  getMyTeamId(): number | undefined {
+    return this.teamId;
+}
+
+
+addPlayerToTeam(playerId: number) {
+  if (!this.teamId) { 
+    this.promptCreateTeam();
+        return;
   }
 
-  getMyTeamId(): number {
-    // Assuming the AuthService has a method called getTeamId that returns the fantasy team ID of the user
-    return this.authService.getTeamId();
-  }
-
-  addPlayerToTeam(playerId: number) {
-    const teamId = this.getMyTeamId();
-    this.soccerService.addPlayerToTeam(teamId, playerId).subscribe(response => {
+  this.soccerService.addPlayerToTeam(this.teamId, playerId).subscribe(response => {
       this.myTeam.push(response);
+  });
+}
+promptCreateTeam() {
+  const teamName = prompt("Please enter a name for your Fantasy Team:");
+  if (teamName) {
+      const teamData = {
+          name: teamName,
+          user: {
+              id: this.userId
+          }
+      };
+      this.soccerService.createFantasyTeam(teamData).subscribe((response: any) => {
+        this.teamId = response.id;
+        alert("Your fantasy team has been created!");
     });
+  }
+}
+
+
+removePlayerFromTeam(playerId: number) {
+  if (!this.teamId) { // Check if teamId is undefined or null
+      console.error("Team ID not available");
+      return; // Exit from the method
   }
 
-  removePlayerFromTeam(playerId: number) {
-    const teamId = this.getMyTeamId();
-    this.soccerService.removePlayerFromTeam(teamId, playerId).subscribe(response => {
-      // Logic to update `myTeam` array
-    });
-  }
+  this.soccerService.removePlayerFromTeam(this.teamId, playerId).subscribe(response => {
+      // Logic to update `myTeam` array. For instance:
+      this.myTeam = this.myTeam.filter(player => player.id !== playerId);
+  });
+}
 }
