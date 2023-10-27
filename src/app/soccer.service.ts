@@ -1,7 +1,7 @@
 // soccer.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { PlayerResponse } from './models/player-response.interface';
+import { PlayerResponse, TeamResponse } from './models/player-response.interface';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -18,12 +18,13 @@ export class SoccerService {
     );
   }
 
-  addPlayerToTeam(teamId: number, playerId: number) {
-    return this.http.put(
+  addPlayerToTeam(teamId: number, playerId: number): Observable<TeamResponse> {
+    return this.http.put<TeamResponse>(
       `${this.baseUrl}/api/fantasyTeam/${teamId}/addPlayer/${playerId}`,
       {}
     );
-  }
+}
+
 
   removePlayerFromTeam(teamId: number, playerId: number) {
     return this.http.put(

@@ -1,9 +1,13 @@
 <div class="container mt-4">
-
   <!-- Search Section -->
   <div class="mb-4">
     <div class="input-group mb-3">
-      <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search Players...">
+      <input
+        type="text"
+        class="form-control"
+        [(ngModel)]="searchQuery"
+        placeholder="Search Players..."
+      />
       <button class="btn btn-primary" (click)="searchPlayers()">Search</button>
       <select class="form-select" [(ngModel)]="searchType">
         <option value="name">Name</option>
@@ -16,20 +20,34 @@
 
   <!-- Results Section -->
   <ul class="list-group mb-4">
-    <li *ngFor="let player of players" class="list-group-item d-flex justify-content-between align-items-center">
-      {{ player.name }} ({{ player.position }}, {{ player.country }}, {{ player.team }})
-      <button class="btn btn-success" (click)="addPlayerToTeam(player.id)">Add to Team</button>
+    <li
+      *ngFor="let player of players"
+      class="list-group-item d-flex justify-content-between align-items-center"
+    >
+      {{ player.name }} ({{ player.position }}, {{ player.country }},
+      {{ player.team }})
+      <button class="btn btn-success" (click)="addPlayerToTeam(player.id)">
+        Add to Team
+      </button>
     </li>
   </ul>
 
   <!-- Team Selected Section -->
-  <div class="my-4">
-    <h2 class="mb-3">{{ teamName ? teamName : 'My Fantasy Team' }}</h2>
-    <ul class="list-group">
-      <li *ngFor="let player of myTeam" class="list-group-item d-flex justify-content-between align-items-center">
-        {{ player.name }} - {{ player.position }} - {{ player.country }}
-        <button class="btn btn-danger" (click)="removePlayerFromTeam(player.id)">Remove from Team</button>
-      </li>
-    </ul>
+  <!-- Team Selected section -->
+  <div class="my-team-section">
+    <h2 class="mb-3">{{ teamName ? teamName : "My Fantasy Team" }}</h2>
+    <div *ngFor="let player of myTeam" class="player-card">
+      <div class="player-details">
+        <h4>{{ player.name }}</h4>
+        <p><strong>Position:</strong> {{ player.position }}</p>
+        <p><strong>Team:</strong> {{ player.team }}</p>
+        <p><strong>Country:</strong> {{ player.country }}</p>
+        <p><strong>Rating:</strong> {{ player.rating | number : "1.1-2" }}</p>
+        <!-- Using a pipe to format the rating -->
+      </div>
+      <button class="btn btn-danger" (click)="removePlayerFromTeam(player.id)">
+        Remove from Team
+      </button>
+    </div>
   </div>
 </div>

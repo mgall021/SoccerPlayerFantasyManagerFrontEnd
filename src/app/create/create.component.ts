@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SoccerService } from '../soccer.service';
 import { AuthService } from '../auth.service';
-import { PlayerResponse } from '../models/player-response.interface';
+import { PlayerResponse,TeamResponse } from '../models/player-response.interface';
 
 @Component({
   selector: 'app-create',
@@ -17,13 +17,13 @@ export class CreateComponent implements OnInit {
   userId: number | null = null;
   teamId?: number;
   teamName: string = '';
+  intendedPlayerId?: number | null;
+  // Declare this property
 
   constructor(
     private soccerService: SoccerService,
     private authService: AuthService
-  ) {
-    this.teamId;
-  }
+  ) {}
 
   ngOnInit() {
     this.userId = this.authService.getUserId();
@@ -40,7 +40,6 @@ export class CreateComponent implements OnInit {
     this.soccerService
       .searchPlayersByCriteria(this.searchType, this.searchQuery)
       .subscribe((response: PlayerResponse) => {
-        console.log(response);
         this.players = response.data;
       });
   }
@@ -51,50 +50,52 @@ export class CreateComponent implements OnInit {
 
   addPlayerToTeam(playerId: number) {
     if (!this.teamId) {
+      this.intendedPlayerId = playerId; // Store the playerId to be added after creating team
       this.promptCreateTeam();
       return;
     }
 
     this.soccerService
       .addPlayerToTeam(this.teamId, playerId)
-      .subscribe((response) => {
-        this.myTeam.push(response);
+      .subscribe((response: TeamResponse) => {
+        if (response.soccerPlayers && response.soccerPlayers.length > 0) {
+          const addedPlayer = response.soccerPlayers[response.soccerPlayers.length - 1];
+          this.myTeam.push(addedPlayer);
+        }
       });
+      
   }
-  promptCreateTeam() {
-    const teamNameFromPrompt = prompt(
-      'Please enter a name for your Fantasy Team:'
-    );
-    if (teamNameFromPrompt) {
-      this.teamName = teamNameFromPrompt; // Set the component's teamName property
 
+  promptCreateTeam() {
+    const teamNameFromPrompt = prompt('Please enter a name for your Fantasy Team:');
+    if (teamNameFromPrompt) {
+      this.teamName = teamNameFromPrompt;
       const teamData = {
         name: this.teamName,
         user: {
           id: this.userId,
         },
       };
-
-      this.soccerService
-        .createFantasyTeam(teamData)
-        .subscribe((response: any) => {
-          this.teamId = response.id;
-          alert('Your fantasy team has been created!');
-        });
+      this.soccerService.createFantasyTeam(teamData).subscribe((response: any) => {
+        this.teamId = response.id;
+        alert('Your fantasy team has been created!');
+        if (this.intendedPlayerId) {
+          this.addPlayerToTeam(this.intendedPlayerId);
+          this.intendedPlayerId = null; // Reset the intendedPlayerId
+        }
+      });
     }
   }
 
   removePlayerFromTeam(playerId: number) {
     if (!this.teamId) {
-      // Check if teamId is undefined or null
       console.error('Team ID not available');
-      return; // Exit from the method
+      return;
     }
 
     this.soccerService
       .removePlayerFromTeam(this.teamId, playerId)
       .subscribe((response) => {
-        // Logic to update `myTeam` array. For instance:
         this.myTeam = this.myTeam.filter((player) => player.id !== playerId);
       });
   }
