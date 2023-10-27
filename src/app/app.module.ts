@@ -8,10 +8,11 @@ import { LandingComponent } from './landing/landing.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { FantasyTeamDescriptionComponent } from './fantasy-team-description/fantasy-team-description.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CreateComponent } from './create/create.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { JwtInterceptor } from './jwt-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,13 @@ import { RegisterComponent } from './register/register.component';
     FormsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtInterceptor, 
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
