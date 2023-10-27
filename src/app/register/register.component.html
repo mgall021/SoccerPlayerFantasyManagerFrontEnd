@@ -1,33 +1,42 @@
-<form (ngSubmit)="onRegisterSubmit()" #registerForm="ngForm">
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input
-      type="text"
-      id="name"
-      name="name"
-      [(ngModel)]="registerData.name"
-      required
-    />
-  </div>
-  <div class="form-group">
-    <label for="email">Email Address</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      [(ngModel)]="registerData.emailAddress"
-      required
-    />
-  </div>
-  <div class="form-group">
-    <label for="password">Password</label>
-    <input
-      type="password"
-      id="password"
-      name="password"
-      [(ngModel)]="registerData.password"
-      required
-    />
-  </div>
-  <button type="submit">Register</button>
-</form>
+<div class="container mt-5">
+  <form
+    (ngSubmit)="onRegisterSubmit()"
+    #registerForm="ngForm"
+    class="mt-5 p-3 bg-light rounded"
+  >
+    <div class="mb-3">
+      <label for="name" class="form-label">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        id="name"
+        name="name"
+        [(ngModel)]="registerData.name"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email Address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        [(ngModel)]="registerData.emailAddress"
+        required
+      />
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="password"
+        name="password"
+        [(ngModel)]="registerData.password"
+        required
+      />
+    </div>
+    <button type="submit" class="btn btn-success">Register</button>
+  </form>
+</div>
