@@ -16,6 +16,7 @@ export class CreateComponent implements OnInit {
   myTeam: any[] = [];
   userId: number | null = null;
   teamId?: number;
+  teamName: string = '';
 
   constructor(
     private soccerService: SoccerService,
@@ -61,14 +62,19 @@ export class CreateComponent implements OnInit {
       });
   }
   promptCreateTeam() {
-    const teamName = prompt('Please enter a name for your Fantasy Team:');
-    if (teamName) {
+    const teamNameFromPrompt = prompt(
+      'Please enter a name for your Fantasy Team:'
+    );
+    if (teamNameFromPrompt) {
+      this.teamName = teamNameFromPrompt; // Set the component's teamName property
+
       const teamData = {
-        name: teamName,
+        name: this.teamName,
         user: {
           id: this.userId,
         },
       };
+
       this.soccerService
         .createFantasyTeam(teamData)
         .subscribe((response: any) => {

@@ -1,31 +1,35 @@
+<div class="container mt-4">
 
-<div class="container">
-  <div>
-    <input type="text" [(ngModel)]="searchQuery" placeholder="Search Players...">
-    <button (click)="searchPlayers()">Search</button>
-    <select [(ngModel)]="searchType">
-      <option value="name">Name</option>
-      <option value="country">Country</option>
-      <option value="position">Position</option>
-      <option value="team">Team</option>
-    </select>
+  <!-- Search Section -->
+  <div class="mb-4">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" [(ngModel)]="searchQuery" placeholder="Search Players...">
+      <button class="btn btn-primary" (click)="searchPlayers()">Search</button>
+      <select class="form-select" [(ngModel)]="searchType">
+        <option value="name">Name</option>
+        <option value="country">Country</option>
+        <option value="position">Position</option>
+        <option value="team">Team</option>
+      </select>
+    </div>
   </div>
-  <!-- Results section -->
-  <div *ngFor="let player of players">
-    {{ player.name }} - {{ player.position }} - {{ player.country }}
-    <button (click)="addPlayerToTeam(player.id)">Add to Team</button>
-  </div>
-  <!-- Team Selected section -->
-  <div *ngFor="let player of myTeam">
-    {{ player.name }} - {{ player.position }} - {{ player.country }}
-    <button (click)="removePlayerFromTeam(player.id)">Remove from Team</button>
+
+  <!-- Results Section -->
+  <ul class="list-group mb-4">
+    <li *ngFor="let player of players" class="list-group-item d-flex justify-content-between align-items-center">
+      {{ player.name }} ({{ player.position }}, {{ player.country }}, {{ player.team }})
+      <button class="btn btn-success" (click)="addPlayerToTeam(player.id)">Add to Team</button>
+    </li>
+  </ul>
+
+  <!-- Team Selected Section -->
+  <div class="my-4">
+    <h2 class="mb-3">{{ teamName ? teamName : 'My Fantasy Team' }}</h2>
+    <ul class="list-group">
+      <li *ngFor="let player of myTeam" class="list-group-item d-flex justify-content-between align-items-center">
+        {{ player.name }} - {{ player.position }} - {{ player.country }}
+        <button class="btn btn-danger" (click)="removePlayerFromTeam(player.id)">Remove from Team</button>
+      </li>
+    </ul>
   </div>
 </div>
-
-
-<ul>
-  <li *ngFor="let player of players">
-    {{ player.name }} ({{ player.position }}, {{ player.country }}, {{ player.team }})
-    <button (click)="addPlayerToTeam(player.id)">Add to Fantasy Team</button>
-  </li>
-</ul>
