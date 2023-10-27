@@ -1,27 +1,63 @@
-# SoccerPlayerManagerFrontend
+# Soccer Player Manager Frontend Project built with Angular
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.5.
+## Description 
+The frontend portion of my Soccer Manager project is tailored for soccer enthusiasts seeking a seamless experience in creating and managing their fantasy soccer teams. Built using Angular, TypeScript, and Bootstrap, this user-friendly interface offers personalized user profiles, simplifying the user journey. Soccer player categorization, based on attributes such as name, country, and position, facilitates effortless player discovery.
 
-## Development server
+With this frontend, users have the freedom to curate their ideal soccer dream teams, with the ability to add, update, and remove players at their discretion. The integration with our robust monolithic backend ensures data security and effective management through CRUD operations and an in-memory database. This frontend creates a user-centric platform, enhancing the soccer fan experience and delivering a tailored environment for soccer enthusiasts
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+# User Stories
+As a user, I want to be able to see a list of my fantasy teams.
 
-## Code scaffolding
+As a user, I want to create a new fantasy team.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+As a user, I want to be able to add players to my team.
 
-## Build
+As a user, I want to be able to remove players from my team.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+As a user, I want to be able to update my player list. 
 
-## Running unit tests
+As a user, I want to see my fantasy team's weekly rating and player ratings.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Entity Relationship Diagram (ERD)
+***
+[Soccer Fantasy Team Manager ERD.pdf](https://github.com/mgall021/SoccerFantasyTeamAPI/files/13188852/Soccer.Fantasy.Team.Manager.ERD.pdf)
 
-## Running end-to-end tests
+## API Endpoints
+***
+<details>
+  <summary> <b>User Endpoints</b></summary>
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+| HTTP Methods | Endpoint URL                         | Functionality           | Access    | 
+|--------------|--------------------------------------|-------------------------|-----------|
+| POST         | `/auth/users/register/`              | Register a new user     | public    |
+| POST         | `/auth/users/login/`                 | Login a registered user | public    |
+| PUT          | `/auth/users/{userId}`                       | Update a User           | private   |
+| GET          | `/auth/users/{userId}`                       | Get a User by Id        | private   |
+| DELETE       | `/auth/users/{userId}/`               | Delete a User           | private   |
 
-## Further help
+</details>
+<details>
+  <summary> <b>SocerPlayer Endpoints</b></summary>
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+| HTTP Methods | Endpoint URL                         | Functionality      | Access  | 
+|--------------|--------------------------------------|--------------------|---------|
+| GET          | `/api/soccerplayers`              | Get all players     | private |
+| GET          | `/api/soccerplayers/name/{name}`                 | Get a player by name   | private |
+| GET          | `/api/soccerplayers/{id}`                       | Get players by Id | private |
+| GET          | `/api/soccerplayers/country/{country}`                       | Get players by country name | private |
+| GET          | `/api/soccerplayers/position/{position}`                       | Get players by their position | private |
+| GET          | `/api/soccerplayers/team/{team}`                       | Get players by their team | private |
+
+</details>
+<details>
+  <summary> <b>Fantasy Team Endpoints</b></summary>
+
+| HTTP Methods | Endpoint URL                         | Functionality           | Access    | 
+|--------------|--------------------------------------|-------------------------|-----------|
+| GET         | `/api/fantasyTeam/{userId`              | Return a list for given user   | public    |
+| POST         | `/api/fantasyTeam`                 | create a new fabtasy Team object| public    |
+| PUT          | `/api/fantasyTeam/{teamid}/addPlayer/{playerid}`                       | adds a player to team          | private   |
+| PUT          | `/api/fantasyTeam/{teamid}/addPlayer/{playerid}`                       | removes a player from the team       | private   |
+| DELETE       | `/api/fantasyTeam/{teamId}`               | Delete a fantasy Team           | private   |
+
+</details>
