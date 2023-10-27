@@ -1,5 +1,8 @@
 # Soccer Player Manager Frontend Project built with Angular
 
+![Alt text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSuahcXZ5qvg8CEifAbL6r2GHhAFjAhJRu9CQ&usqp=CAU)
+
+
 ## Description 
 The frontend portion of my Soccer Manager project is tailored for soccer enthusiasts seeking a seamless experience in creating and managing their fantasy soccer teams. Built using Angular, TypeScript, and Bootstrap, this user-friendly interface offers personalized user profiles, simplifying the user journey. Soccer player categorization, based on attributes such as name, country, and position, facilitates effortless player discovery.
 
@@ -62,9 +65,15 @@ As a user, I want to see my fantasy team's weekly rating and player ratings.
 
 </details>
 
+
+![Alt text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTy1oSbvW7IUTA91k1cJKjhSA4JhWT3NwWlpA&usqp=CAU)
+
 ## Project Management
 
 In managing the frontend of this project, I adopted a structured approach by utilizing different branches, each serving a specific purpose. This allowed for a clear separation of tasks and functionalities, enhancing collaboration and organization throughout the development process. Additionally, I meticulously planned and created sketches to visualize and define the frontend's design and layout, ensuring that it aligns with the project's objectives and user experience goals. Microsoft OneNote served as my primary planner, facilitating efficient organization and documentation of project-related details.
+
+![Alt text](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSGmQC4tGQL-NhAeXtaE_h2Z4HMTJcZrd9V2g&usqp=CAU)
+
 
 ## Challenges
 
