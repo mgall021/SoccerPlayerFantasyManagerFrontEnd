@@ -1,6 +1,8 @@
 // soccer.service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { PlayerResponse } from './models/player-response.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -10,8 +12,8 @@ export class SoccerService {
 
   constructor(private http: HttpClient) {}
 
-  searchPlayersByCriteria(criteria: string, query: string) {
-    return this.http.get(
+  searchPlayersByCriteria(criteria: string, query: string): Observable<PlayerResponse>  {
+    return this.http.get<PlayerResponse>(
       `${this.baseUrl}/api/soccerplayers/${criteria}/${query}`
     );
   }
