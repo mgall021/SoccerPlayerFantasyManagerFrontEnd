@@ -4,8 +4,6 @@ import { FantasyTeamService } from '../fantasy-team.service';
 import { SoccerPlayerService } from '../soccer-player.service';
 import { AuthService } from '../auth.service';
 
-
-
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
@@ -16,20 +14,22 @@ export class CreateComponent implements OnInit {
   playerSearchTerm: string = '';
   searchResults: any[] = [];
   hasFantasyTeam: boolean = false;
-  userId:number|null=null;
+  userId: number | null = null;
 
   constructor(
     private router: Router,
-    private fantasyTeamService: FantasyTeamService, 
+    private fantasyTeamService: FantasyTeamService,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
-   
-    this.userId=this.authService.getUserId();
-    console.log(this.userId);
-    this.checkUserHasFantasyTeam();
+    this.userId = this.authService.getUserId();
+    console.log(this.userId as number);
+    if (this.userId !== null) {
+      this.checkUserHasFantasyTeam();
+    }
   }
+ 
 
   checkUserHasFantasyTeam() {
     this.fantasyTeamService
@@ -58,10 +58,12 @@ export class CreateComponent implements OnInit {
   //     });
   // }
   addPlayer(playerId: number) {
-    this.fantasyTeamService.addPlayerToTeam(this.userId as number, playerId).subscribe(() => {
-      this.loadUserFantasyTeamPlayers();
-      this.searchResults = [];
-    });
+    this.fantasyTeamService
+      .addPlayerToTeam(this.userId as number, playerId)
+      .subscribe(() => {
+        this.loadUserFantasyTeamPlayers();
+        this.searchResults = [];
+      });
   }
   removePlayer(playerId: number) {
     this.fantasyTeamService

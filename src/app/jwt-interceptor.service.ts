@@ -6,16 +6,26 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { AuthService } from './auth.service'; // Import your AuthService
 
 @Injectable({
   providedIn: 'root',
 })
 export class JwtInterceptor implements HttpInterceptor {
+  constructor(private authService: AuthService) {}
+
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('token');
+    // const token = this.authService.getToken();
+     // Get the token from your AuthService
+     const token = localStorage.getItem('token');
+    
+    if (request.url === 'http://localhost:9098/auth/users/register') {
+  return next.handle(request);
+}
+
 
     if (token) {
       console.log('sending token', token);
