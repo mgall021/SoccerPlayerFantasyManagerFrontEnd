@@ -1,6 +1,5 @@
-<!-- create.html -->
+
 <div class="container">
-  <!-- Search Bar -->
   <div>
     <input type="text" [(ngModel)]="searchQuery" placeholder="Search Players...">
     <button (click)="searchPlayers()">Search</button>
@@ -11,14 +10,10 @@
       <option value="team">Team</option>
     </select>
   </div>
-
-  <!-- Results Section -->
   <div *ngFor="let player of players">
     {{ player.name }} - {{ player.position }} - {{ player.country }}
     <button (click)="addPlayerToTeam(player.id)">Add to Team</button>
   </div>
-
-  <!-- My Team Section -->
   <div *ngFor="let player of myTeam">
     {{ player.name }} - {{ player.position }} - {{ player.country }}
     <button (click)="removePlayerFromTeam(player.id)">Remove from Team</button>
