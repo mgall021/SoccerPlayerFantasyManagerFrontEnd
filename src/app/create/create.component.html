@@ -1,46 +1,26 @@
-<!-- 
+<!-- create.html -->
 <div class="container">
-    <div class="row">
-     
-      <div class="col-md-3">
- 
-        <div class="card mb-3">
-          <div class="card-header"> -->
-            <!-- Roster
-          </div>
-          <div class="card-body">
+  <!-- Search Bar -->
+  <div>
+    <input type="text" [(ngModel)]="searchQuery" placeholder="Search Players...">
+    <button (click)="searchPlayers()">Search</button>
+    <select [(ngModel)]="searchType">
+      <option value="name">Name</option>
+      <option value="country">Country</option>
+      <option value="position">Position</option>
+      <option value="team">Team</option>
+    </select>
+  </div>
 
-            <ul class="list-group">
-              <li class="list-group-item" *ngFor="let player of userFantasyTeamPlayers">
-                {{ player.name }} -->
-                <!-- <button class="btn btn-danger btn-sm float-right" (click)="removePlayer(player.id)">Remove</button> -->
-              <!-- </li>
-            </ul>
-          </div>
-        </div>
+  <!-- Results Section -->
+  <div *ngFor="let player of players">
+    {{ player.name }} - {{ player.position }} - {{ player.country }}
+    <button (click)="addPlayerToTeam(player.id)">Add to Team</button>
+  </div>
 
-        <div class="card">
-          <div class="card-header">
-            Search for Players
-          </div>
-          <div class="card-body">
-            <div class="form-group">
-              <input type="text" class="form-control" placeholder="Player Name" [(ngModel)]="playerSearchTerm"> -->
-              <!-- <button class="btn btn-primary mt-2" (click)="searchPlayers()">Search</button> -->
-            <!-- </div> -->
-       
-            <!-- <ul class="list-group">
-              <li class="list-group-item" *ngFor="let player of searchResults">
-                {{ player.name }} -->
-                <!-- <button class="btn btn-success btn-sm float-right" (click)="addPlayer(player.id)">Add to Roster</button> -->
-              <!-- </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-  
-      <div class="col-md-9">
-      </div>
-    </div> -->
-
-  <h1> BRO</h1>
+  <!-- My Team Section -->
+  <div *ngFor="let player of myTeam">
+    {{ player.name }} - {{ player.position }} - {{ player.country }}
+    <button (click)="removePlayerFromTeam(player.id)">Remove from Team</button>
+  </div>
+</div>
