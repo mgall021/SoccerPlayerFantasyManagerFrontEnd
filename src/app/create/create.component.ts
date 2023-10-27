@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FantasyTeamService } from '../fantasy-team.service';
-import { SoccerPlayerService } from '../soccer-player.service';
+import { SoccerService } from '../soccer.service';
 import { AuthService } from '../auth.service';
+import {
+  PlayerResponse,
+  TeamResponse,
+} from '../models/player-response.interface';
 
 @Component({
   selector: 'app-create',
@@ -10,66 +13,105 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./create.component.css'],
 })
 export class CreateComponent implements OnInit {
-  userFantasyTeamPlayers: any[] = [];
-  playerSearchTerm: string = '';
-  searchResults: any[] = [];
-  hasFantasyTeam: boolean = false;
+  searchQuery: string = '';
+  searchType: string = 'name';
+  players: any[] = [];
+  myTeam: any[] = [];
   userId: number | null = null;
+  teamId?: number;
+  teamName: string = '';
+  intendedPlayerId?: number | null;
+  // Declare this property
 
   constructor(
-    private router: Router,
-    private fantasyTeamService: FantasyTeamService,
+    private soccerService: SoccerService,
     private authService: AuthService
   ) {}
 
   ngOnInit() {
     this.userId = this.authService.getUserId();
-    console.log(this.userId as number);
     if (this.userId !== null) {
-      this.checkUserHasFantasyTeam();
+      this.authService.getTeamId().subscribe((response) => {
+        if (response && response.length > 0) {
+          this.teamId = response[0].id;
+        }
+      });
     }
   }
- 
 
-  checkUserHasFantasyTeam() {
-    this.fantasyTeamService
-      .getUserFantasyTeams(this.userId as number)
-      .subscribe((fantasyTeams) => {
-        this.hasFantasyTeam = fantasyTeams.length > 0;
-        if (!this.hasFantasyTeam) {
-          this.router.navigate(['/create-fantasy-team']);
+  searchPlayers() {
+    this.soccerService
+      .searchPlayersByCriteria(this.searchType, this.searchQuery)
+      .subscribe((response: PlayerResponse) => {
+        this.players = response.data;
+      });
+  }
+
+  getMyTeamId(): number | undefined {
+    return this.teamId;
+  }
+
+  addPlayerToTeam(playerId: number) {
+    if (!this.teamId) {
+      this.intendedPlayerId = playerId; // Store the playerId to be added after creating team
+      this.promptCreateTeam();
+      return;
+    }
+
+    this.soccerService
+      .addPlayerToTeam(this.teamId, playerId)
+      .subscribe((response: TeamResponse) => {
+        if (response.soccerPlayers && response.soccerPlayers.length > 0) {
+          const addedPlayer =
+            response.soccerPlayers[response.soccerPlayers.length - 1];
+
+          // Check if player already exists in the myTeam array
+          const playerExists = this.myTeam.some(
+            (player) => player.id === addedPlayer.id
+          );
+
+          if (!playerExists) {
+            this.myTeam.push(addedPlayer);
+          }
         }
       });
   }
-  loadUserFantasyTeamPlayers() {
-    this.fantasyTeamService
-      .getUserFantasyTeams(this.userId as number)
-      .subscribe((fantasyTeams) => {
-        if (fantasyTeams.length > 0) {
-          this.userFantasyTeamPlayers = fantasyTeams[0].soccerPlayers; // list of players
-        }
-      });
+
+  promptCreateTeam() {
+    const teamNameFromPrompt = prompt(
+      'Please enter a name for your Fantasy Team:'
+    );
+    if (teamNameFromPrompt) {
+      this.teamName = teamNameFromPrompt;
+      const teamData = {
+        name: this.teamName,
+        user: {
+          id: this.userId,
+        },
+      };
+      this.soccerService
+        .createFantasyTeam(teamData)
+        .subscribe((response: any) => {
+          this.teamId = response.id;
+          alert('Your fantasy team has been created!');
+          if (this.intendedPlayerId) {
+            this.addPlayerToTeam(this.intendedPlayerId);
+            this.intendedPlayerId = null; // Reset the intendedPlayerId
+          }
+        });
+    }
   }
-  // searchPlayers() {
-  //   this.fantasyTeamService
-  //     .searchPlayers(this.playerSearchTerm)
-  //     .subscribe((results) => {
-  //       this.searchResults = results;
-  //     });
-  // }
-  addPlayer(playerId: number) {
-    this.fantasyTeamService
-      .addPlayerToTeam(this.userId as number, playerId)
-      .subscribe(() => {
-        this.loadUserFantasyTeamPlayers();
-        this.searchResults = [];
-      });
-  }
-  removePlayer(playerId: number) {
-    this.fantasyTeamService
-      .removePlayerFromTeam(this.userId as number, playerId)
-      .subscribe(() => {
-        this.loadUserFantasyTeamPlayers();
+
+  removePlayerFromTeam(playerId: number) {
+    if (!this.teamId) {
+      console.error('Team ID not available');
+      return;
+    }
+
+    this.soccerService
+      .removePlayerFromTeam(this.teamId, playerId)
+      .subscribe((response) => {
+        this.myTeam = this.myTeam.filter((player) => player.id !== playerId);
       });
   }
 }
