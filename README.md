@@ -61,3 +61,29 @@ As a user, I want to see my fantasy team's weekly rating and player ratings.
 | DELETE       | `/api/fantasyTeam/{teamId}`               | Delete a fantasy Team           | private   |
 
 </details>
+
+## Project Management
+
+In managing the frontend of this project, I adopted a structured approach by utilizing different branches, each serving a specific purpose. This allowed for a clear separation of tasks and functionalities, enhancing collaboration and organization throughout the development process. Additionally, I meticulously planned and created sketches to visualize and define the frontend's design and layout, ensuring that it aligns with the project's objectives and user experience goals. Microsoft OneNote served as my primary planner, facilitating efficient organization and documentation of project-related details.
+
+## Challenges
+
+My most significant challenge during this project was the seamless propagation of JWT tokens and user IDs throughout the entire application. Ensuring consistent and secure access across various parts of the program required meticulous attention to detail and thorough integration, but overcoming this obstacle contributed significantly to the project's success.
+
+### Acknowledgments
+
+I'd like to express my heartfelt gratitude to everyone who contributed to the success of this project. Special thanks to my company, Interapt, for providing the support and resources necessary for this endeavor.
+
+I also want to extend my appreciation to my dedicated instructors, Leo, Dhrubo, and Suresh, whose guidance and expertise were instrumental throughout this journey. Additionally, a big shoutout to Kerry for her unwavering support and presence week after week.
+
+Your collective efforts and encouragement have been invaluable, and I couldn't have accomplished this without you all. Thank you for being a part of this project's success.
+
+
+
+
+
+
+
+
+
+
