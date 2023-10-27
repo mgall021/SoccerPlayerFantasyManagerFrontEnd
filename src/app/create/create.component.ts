@@ -37,6 +37,7 @@ export class CreateComponent implements OnInit {
   searchPlayers() {
     this.soccerService.searchPlayersByCriteria(this.searchType, this.searchQuery).subscribe(response => {
       console.log(response);
+      this.players = response.data;
   });
   
   }
