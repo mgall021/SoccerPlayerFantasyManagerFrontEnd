@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { SoccerService } from '../soccer.service';
 import { AuthService } from '../auth.service';
-import { PlayerResponse,TeamResponse } from '../models/player-response.interface';
+import {
+  PlayerResponse,
+  TeamResponse,
+} from '../models/player-response.interface';
 
 @Component({
   selector: 'app-create',
@@ -59,15 +62,25 @@ export class CreateComponent implements OnInit {
       .addPlayerToTeam(this.teamId, playerId)
       .subscribe((response: TeamResponse) => {
         if (response.soccerPlayers && response.soccerPlayers.length > 0) {
-          const addedPlayer = response.soccerPlayers[response.soccerPlayers.length - 1];
-          this.myTeam.push(addedPlayer);
+          const addedPlayer =
+            response.soccerPlayers[response.soccerPlayers.length - 1];
+
+          // Check if player already exists in the myTeam array
+          const playerExists = this.myTeam.some(
+            (player) => player.id === addedPlayer.id
+          );
+
+          if (!playerExists) {
+            this.myTeam.push(addedPlayer);
+          }
         }
       });
-      
   }
 
   promptCreateTeam() {
-    const teamNameFromPrompt = prompt('Please enter a name for your Fantasy Team:');
+    const teamNameFromPrompt = prompt(
+      'Please enter a name for your Fantasy Team:'
+    );
     if (teamNameFromPrompt) {
       this.teamName = teamNameFromPrompt;
       const teamData = {
@@ -76,14 +89,16 @@ export class CreateComponent implements OnInit {
           id: this.userId,
         },
       };
-      this.soccerService.createFantasyTeam(teamData).subscribe((response: any) => {
-        this.teamId = response.id;
-        alert('Your fantasy team has been created!');
-        if (this.intendedPlayerId) {
-          this.addPlayerToTeam(this.intendedPlayerId);
-          this.intendedPlayerId = null; // Reset the intendedPlayerId
-        }
-      });
+      this.soccerService
+        .createFantasyTeam(teamData)
+        .subscribe((response: any) => {
+          this.teamId = response.id;
+          alert('Your fantasy team has been created!');
+          if (this.intendedPlayerId) {
+            this.addPlayerToTeam(this.intendedPlayerId);
+            this.intendedPlayerId = null; // Reset the intendedPlayerId
+          }
+        });
     }
   }
 
