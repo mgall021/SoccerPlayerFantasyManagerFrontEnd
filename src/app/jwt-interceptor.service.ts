@@ -6,7 +6,7 @@ import {
   HttpEvent,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { AuthService } from './auth.service'; // Import your AuthService
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,15 +18,12 @@ export class JwtInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // const token = this.authService.getToken();
-     // Get the token from your AuthService
-     const token = localStorage.getItem('token');
-    
+    const token = this.authService.getToken();
+
+    // Exclude registration URL from adding token
     if (request.url === 'http://localhost:9098/auth/users/register') {
-  return next.handle(request);
-}
-
-
+      return next.handle(request);
+    }
     if (token) {
       console.log('sending token', token);
       request = request.clone({

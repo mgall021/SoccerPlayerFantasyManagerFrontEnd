@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { FantasyTeamService } from '../fantasy-team.service';
-import { SoccerPlayerService } from '../soccer-player.service';
+import { SoccerService } from '../soccer.service';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -10,66 +9,46 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./create.component.css'],
 })
 export class CreateComponent implements OnInit {
-  userFantasyTeamPlayers: any[] = [];
-  playerSearchTerm: string = '';
-  searchResults: any[] = [];
-  hasFantasyTeam: boolean = false;
+  searchQuery: string = '';
+  searchType: string = 'name';
+  players: any[] = [];
+  myTeam: any[] = [];
   userId: number | null = null;
 
   constructor(
-    private router: Router,
-    private fantasyTeamService: FantasyTeamService,
-    private authService: AuthService
+    private soccerService: SoccerService,
+    private authService: AuthService  
   ) {}
 
   ngOnInit() {
-    this.userId = this.authService.getUserId();
-    console.log(this.userId as number);
+    this.userId = this.authService.getUserId(); // Assuming this method exists in AuthService and returns the logged-in user's ID
     if (this.userId !== null) {
-      this.checkUserHasFantasyTeam();
+      // If you have other logic to execute for the logged-in user, place it here
     }
   }
- 
 
-  checkUserHasFantasyTeam() {
-    this.fantasyTeamService
-      .getUserFantasyTeams(this.userId as number)
-      .subscribe((fantasyTeams) => {
-        this.hasFantasyTeam = fantasyTeams.length > 0;
-        if (!this.hasFantasyTeam) {
-          this.router.navigate(['/create-fantasy-team']);
-        }
-      });
+  searchPlayers() {
+    this.soccerService.searchPlayersByCriteria(this.searchType, this.searchQuery).subscribe(response => {
+      this.players = response.data;
+    });
   }
-  loadUserFantasyTeamPlayers() {
-    this.fantasyTeamService
-      .getUserFantasyTeams(this.userId as number)
-      .subscribe((fantasyTeams) => {
-        if (fantasyTeams.length > 0) {
-          this.userFantasyTeamPlayers = fantasyTeams[0].soccerPlayers; // list of players
-        }
-      });
+
+  getMyTeamId(): number {
+    // Assuming the AuthService has a method called getTeamId that returns the fantasy team ID of the user
+    return this.authService.getTeamId();
   }
-  // searchPlayers() {
-  //   this.fantasyTeamService
-  //     .searchPlayers(this.playerSearchTerm)
-  //     .subscribe((results) => {
-  //       this.searchResults = results;
-  //     });
-  // }
-  addPlayer(playerId: number) {
-    this.fantasyTeamService
-      .addPlayerToTeam(this.userId as number, playerId)
-      .subscribe(() => {
-        this.loadUserFantasyTeamPlayers();
-        this.searchResults = [];
-      });
+
+  addPlayerToTeam(playerId: number) {
+    const teamId = this.getMyTeamId();
+    this.soccerService.addPlayerToTeam(teamId, playerId).subscribe(response => {
+      this.myTeam.push(response);
+    });
   }
-  removePlayer(playerId: number) {
-    this.fantasyTeamService
-      .removePlayerFromTeam(this.userId as number, playerId)
-      .subscribe(() => {
-        this.loadUserFantasyTeamPlayers();
-      });
+
+  removePlayerFromTeam(playerId: number) {
+    const teamId = this.getMyTeamId();
+    this.soccerService.removePlayerFromTeam(teamId, playerId).subscribe(response => {
+      // Logic to update `myTeam` array
+    });
   }
 }

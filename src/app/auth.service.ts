@@ -61,4 +61,11 @@ export class AuthService {
   getUserId() {
     return this.userId;
   }
+
+  getTeamId(): Observable<any> {
+    const userId = this.getUserId(); 
+    return this.http.get(`/api/fantasyTeam/${userId}`);
+  }
+
+
 }
