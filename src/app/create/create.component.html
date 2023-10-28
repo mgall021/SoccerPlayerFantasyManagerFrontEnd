@@ -33,7 +33,6 @@
   </ul>
 
   <!-- Team Selected Section -->
-  <!-- Team Selected section -->
   <div class="my-team-section">
     <h2 class="mb-3">{{ teamName ? teamName : "My Fantasy Team" }}</h2>
     <div *ngFor="let player of myTeam" class="player-card">
@@ -43,7 +42,6 @@
         <p><strong>Team:</strong> {{ player.team }}</p>
         <p><strong>Country:</strong> {{ player.country }}</p>
         <p><strong>Rating:</strong> {{ player.rating | number : "1.1-2" }}</p>
-        <!-- Using a pipe to format the rating -->
       </div>
       <button class="btn btn-danger" (click)="removePlayerFromTeam(player.id)">
         Remove from Team

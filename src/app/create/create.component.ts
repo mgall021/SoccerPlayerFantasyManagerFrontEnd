@@ -21,13 +21,20 @@ export class CreateComponent implements OnInit {
   teamId?: number;
   teamName: string = '';
   intendedPlayerId?: number | null;
-  // Declare this property
 
+  /**
+   * Constructs the component and injects required services.
+   * @param {SoccerService} soccerService - Service for soccer related operations.
+   * @param {AuthService} authService - Service for authentication related operations.
+   */
   constructor(
     private soccerService: SoccerService,
-    private authService: AuthService
+    private authService: AuthService // injecting auth service
   ) {}
-
+  /**
+   * Lifecycle hook that is called after data-bound properties are initialized.
+   * It initializes the user ID and retrieves the user's team ID if available.
+   */
   ngOnInit() {
     this.userId = this.authService.getUserId();
     if (this.userId !== null) {
@@ -38,6 +45,9 @@ export class CreateComponent implements OnInit {
       });
     }
   }
+  /**
+   * Search for players based on given criteria.
+   */
 
   searchPlayers() {
     this.soccerService
@@ -46,10 +56,17 @@ export class CreateComponent implements OnInit {
         this.players = response.data;
       });
   }
-
+  /**
+   * Retrieve the ID of the user's team.
+   * @returns {number | undefined} - The ID of the user's team, or undefined if not available.
+   */
   getMyTeamId(): number | undefined {
     return this.teamId;
   }
+  /**
+   * Add a player to the user's team. If no team exists, prompts the user to create one.
+   * @param {number} playerId - The ID of the player to add.
+   */
 
   addPlayerToTeam(playerId: number) {
     if (!this.teamId) {
@@ -76,7 +93,9 @@ export class CreateComponent implements OnInit {
         }
       });
   }
-
+  /**
+   * Prompt the user to create a new fantasy team.
+   */
   promptCreateTeam() {
     const teamNameFromPrompt = prompt(
       'Please enter a name for your Fantasy Team:'
@@ -101,7 +120,10 @@ export class CreateComponent implements OnInit {
         });
     }
   }
-
+  /**
+   * Remove a player from the user's team.
+   * @param {number} playerId - The ID of the player to remove.
+   */
   removePlayerFromTeam(playerId: number) {
     if (!this.teamId) {
       console.error('Team ID not available');
