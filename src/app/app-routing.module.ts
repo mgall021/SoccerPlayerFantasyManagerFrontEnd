@@ -8,21 +8,20 @@ import { RegisterComponent } from './register/register.component';
 const routes: Routes = [
   {
     path: '',
-    component: LandingComponent,
+    component: LandingComponent, // landing page
   },
   {
-    path:'register',
-    component:RegisterComponent
+    path: 'register',
+    component: RegisterComponent, // register page
   },
   {
     path: 'login',
-    component: LoginComponent,
+    component: LoginComponent, //Login Page
   },
   {
     path: 'create',
-    component: CreateComponent,
+    component: CreateComponent, // Fantasy Team Search and Team View
   },
- 
 ];
 
 @NgModule({

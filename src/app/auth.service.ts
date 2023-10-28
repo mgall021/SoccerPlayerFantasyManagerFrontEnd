@@ -7,15 +7,24 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly API_URL = 'http://localhost:9098/auth/users';
+  private readonly API_URL = 'http://localhost:9098/auth/users'; // User Controller path
 
-  private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
+  private tokenSubject: BehaviorSubject<string | null> = new BehaviorSubject<
+    string | null
+  >(null);
   public token$: Observable<string | null> = this.tokenSubject.asObservable();
 
-  userId: number | null = null;
+  userId: number | null = null; // needed to be null bc user is yet to create it
 
   constructor(private http: HttpClient) {}
 
+  /**
+   * Authenticates the user using the provided username and password.
+   * On successful authentication, saves the token to local storage and informs all subscribers about the token change.
+   * @param {string} username - User's email address.
+   * @param {string} password - User's password.
+   * @returns {Observable<any>} Observable with the server response.
+   */
   login(username: string, password: string): Observable<any> {
     const loginData = {
       emailAddress: username,
@@ -32,6 +41,12 @@ export class AuthService {
     );
   }
 
+  /**
+   * Registers a new user using the provided user details.
+   * On successful registration, sets the userId of the newly registered user.
+   * @param {any} user - Object containing user registration details.
+   * @returns {Observable<any>} Observable with the server response.
+   */
   register(user: any): Observable<any> {
     return this.http.post<any>(`${this.API_URL}/register/`, user).pipe(
       tap((response) => {
@@ -43,11 +58,6 @@ export class AuthService {
         }
       })
     );
-  }
-
-  logout(): void {
-    localStorage.removeItem('token');
-    this.tokenSubject.next(null);
   }
 
   getToken(): string | null {
@@ -63,9 +73,7 @@ export class AuthService {
   }
 
   getTeamId(): Observable<any> {
-    const userId = this.getUserId(); 
+    const userId = this.getUserId();
     return this.http.get(`/api/fantasyTeam/${userId}`);
   }
-
-
 }
