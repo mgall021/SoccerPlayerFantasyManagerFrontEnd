@@ -12,8 +12,19 @@ import { AuthService } from './auth.service';
   providedIn: 'root',
 })
 export class JwtInterceptor implements HttpInterceptor {
+    /**
+   * Constructs the interceptor and injects the AuthService to retrieve the JWT token.
+   * @param {AuthService} authService - Service that provides authentication-related functionalities.
+   */
   constructor(private authService: AuthService) {}
 
+  /**
+   * Intercepts outgoing HTTP requests, and if a JWT token exists, appends it to the request headers.
+   * If the request is for the registration URL, it bypasses adding the JWT token.
+   * @param {HttpRequest<any>} request - The outgoing HTTP request object.
+   * @param {HttpHandler} next - The HTTP request handler.
+   * @returns {Observable<HttpEvent<any>>} - An observable of the HTTP event flow.
+   */
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
